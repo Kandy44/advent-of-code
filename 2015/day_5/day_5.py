@@ -32,15 +32,4 @@ def main():
     strings = get_data()
     print(count_nice_strings(strings, updated=False))
     print(count_nice_strings(strings, updated=True))
-
-    # print(nice_string_updated("aaa"))
-
-    # print(nice_string_updated("xyxy"))
-
-    # print(nice_string_updated("qjhvhtzxzqqjkmpb"))
-    # print(nice_string_updated("xxyxx"))
-    # print(nice_string_updated("uurcxstgmygtbstg"))
-    # print(nice_string_updated("ieodomkazucvgmuy"))
-
-
 main()

@@ -30,9 +30,7 @@ def total_brightness(instructions, toggle_increment=False):
             if toggle_increment:
                 grid[x1 : x2 + 1, y1 : y2 + 1] += 2
             else:
-                grid[x1 : x2 + 1, y1 : y2 + 1] = np.logical_not(
-                    grid[x1 : x2 + 1, y1 : y2 + 1]
-                )
+                grid[x1 : x2 + 1, y1 : y2 + 1] = np.logical_not(grid[x1 : x2 + 1, y1 : y2 + 1])
     return np.sum(grid)
 
 

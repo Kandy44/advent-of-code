@@ -1,5 +1,6 @@
 def read_data():
-    return [l.strip() for l in open("../inputs/3.in", "r")]
+    with open("../inputs/3.in", "r") as fp:
+        return  [l.strip() for l in fp]
 
 def calculate_priorities(rucksacks,group_count=1,whole_rucksacks=False):
     priorities_sum = 0

@@ -1,33 +1,27 @@
-def stack_count():
-    with open('../inputs/5.in') as fp:
-        for line in fp:
-            if all(i.strip().isdigit() for i in line.strip().split('  ')):
-                return len(line.strip().split('  '))
-
 def read_data():
     with open('../inputs/5.in') as fp:
-        stacks = [[] for _ in range(stack_count())]
+        stacks = []
         operations = []
         for line in fp:
-            if any(i.isdigit() for i in line) and line.count('move') == 0:
-                continue
-            elif line.count('move') > 0:
+            if line.count('move') > 0:
                 operations.append(line.strip('\n').split(' '))
             else:
-                i = 0
+                row = []
                 parts = line.strip('\n').split('    ')
                 for part in parts:
                     if part == '':
-                        stacks[i].append(part)
-                        i += 1
+                        row.append(part)
                     else:
                         for val in part.split(' '):
                             # Removing brackets around crate name
-                            stacks[i].append(val[1:-1])
-                            i += 1
-
-        stacks = [[val for val in row if val != ''] for row in stacks]
+                            row.append(val[1:-1])
+                if not all(val == '' for val in row):
+                    stacks.append(row)
+        
+        # Transposing stacks
+        stacks = [[val for val in row if val != ''] for row in zip(*stacks)]
         return stacks,operations
+
 
 def find_top_crates(stacks,operations,reverse_crates=False):
     for op in operations:
@@ -43,7 +37,6 @@ def find_top_crates(stacks,operations,reverse_crates=False):
         stacks[to_idx] = movable_crates + stacks[to_idx]
         stacks[from_idx] = stacks[from_idx][count:]
     return ''.join(row[0] for row in stacks)
-
 
 def main():
     stacks,operations = read_data()

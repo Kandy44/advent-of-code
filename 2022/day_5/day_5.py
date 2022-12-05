@@ -8,14 +8,19 @@ def read_data():
             else:
                 row = []
                 parts = line.strip('\n').split('    ')
+                empty_part_count = 0
                 for part in parts:
                     if part == '':
                         row.append(part)
+                        empty_part_count += 1
                     else:
                         for val in part.split(' '):
                             # Removing brackets around crate name
-                            row.append(val[1:-1])
-                if not all(val == '' for val in row):
+                            crate_name = val[1:-1]
+                            row.append(crate_name)
+                            if crate_name == "":
+                                empty_part_count += 1
+                if empty_part_count != len(row):
                     stacks.append(row)
         
         # Transposing stacks
@@ -25,7 +30,7 @@ def read_data():
 
 def find_top_crates(stacks,operations,reverse_crates=False):
     for op in operations:
-        count,from_idx,to_idx = map(int,[op[1],op[3],op[5]])
+        count,from_idx,to_idx = map(int,op[1::2])
         from_idx,to_idx = from_idx-1,to_idx-1
         movable_crates = stacks[from_idx][:count]
         

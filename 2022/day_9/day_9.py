@@ -17,9 +17,11 @@ def count_repeated_points(data,tail_length=1):
       
       for i in range(tail_length):
         tail_x,tail_y = tail_idxs[i]
+        
         if abs(prev_head_x - tail_x) == 2 or abs(prev_head_y - tail_y) == 2:
           tail_x += comp(prev_head_x,tail_x)
           tail_y += comp(prev_head_y,tail_y)
+        
         tail_idxs[i] = [tail_x,tail_y]
         prev_head_x,prev_head_y = tail_x,tail_y
         visited_points.add(tuple(tail_idxs[-1]))

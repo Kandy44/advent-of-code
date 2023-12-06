@@ -48,9 +48,9 @@ func readData(filename string) []int64 {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		if len(line) == 0 && len(cur_part_data) > 0 {
+		if len(line) == 0 {
 			map_data = append(map_data, cur_part_data)
-			cur_part_data = make([][]int64, 0)
+			cur_part_data = nil
 		} else {
 			nums := getNums(line)
 			if len(nums) > 0 {
@@ -75,7 +75,6 @@ func abs(x int64) int64 {
 func find_location(seed int64) int64 {
 	check_value := seed
 	for _, row := range map_data {
-		// fmt.Print64ln(row)
 		for _, part := range row {
 			x1 := part[1]
 			y1 := part[1] + part[2]
@@ -101,9 +100,8 @@ func part_1(seeds []int64) int64 {
 
 func part_2(seeds []int64) {
 	part_2_ans.Store(math.MaxInt64)
-
+	wg := sync.WaitGroup{}
 	for i := 0; i < len(seeds); i += 2 {
-		wg := sync.WaitGroup{}
 		wg.Add(int(seeds[i+1]))
 		for cur_seed := seeds[i]; cur_seed < seeds[i]+seeds[i+1]; cur_seed++ {
 			go func(wg *sync.WaitGroup, seed int64) {

@@ -7,23 +7,13 @@ import math
 
 
 def read_data(filename):
-    times, distances = [], []
     with open(filename, "r", encoding="utf-8") as fp:
-        times = list(map(int, re.findall(r"\d+", fp.readline())))
-        distances = list(map(int, re.findall(r"\d+", fp.readline())))
+        times, distances = [list(map(int, re.findall(r"\d+", fp.readline()))) for _ in range(2)]
     return [times, distances]
 
 
 def count_possibilities(times, distances):
-    possibilities = []
-    for cur_time, cur_dist in zip(times, distances):
-        cur_count = 0
-        for i in range(1, cur_time):
-            if (cur_time - i) * i > cur_dist:
-                cur_count += 1
-        if cur_count > 0:
-            possibilities.append(cur_count)
-    return math.prod(possibilities)
+    return math.prod([cur_count for cur_time, cur_dist in zip(times, distances) if(cur_count := sum((cur_time - i) * i > cur_dist for i in range(1, cur_time)))> 0])
 
 
 def day_6(data):
